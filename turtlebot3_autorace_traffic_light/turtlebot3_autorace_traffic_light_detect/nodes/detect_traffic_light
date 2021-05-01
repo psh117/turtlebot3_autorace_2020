@@ -381,23 +381,25 @@ class DetectTrafficLight():
         params.minThreshold = 0
         params.maxThreshold = 255
 
-        # Filter by Area.
+        # Filter by Area. 영역 크기 (뭉쳐져 있는 픽셀)
         params.filterByArea = True
-        params.minArea = 50
-        params.maxArea = 600
+        params.minArea = 10 
+        params.maxArea = 600 # 신호등이 작아서 무시하고 싶을 때 이 값을 줄이면 됨
 
-        # Filter by Circularity
+        # Filter by Circularity (얼마나 둥근지)
         params.filterByCircularity = True
         params.minCircularity = 0.4
 
-        # Filter by Convexity
+        # Filter by Convexity (얼마나 안 찌그러져있는지)
         params.filterByConvexity = True
         params.minConvexity = 0.6
 
         det=cv2.SimpleBlobDetector_create(params)
         keypts=det.detect(mask)
         frame=cv2.drawKeypoints(self.cv_image,keypts,np.array([]),(0,255,255),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
+        
+        
+        # col, row (검출된 위치를 튜닝 하는 곳)
         col1 = 180
         col2 = 270
         col3 = 305
